@@ -1,0 +1,243 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    color: white;
+}
+
+/* container */
+.container{
+    height: 110vh;
+    width: 100vw;
+    overflow: hidden;
+    position: relative;
+    margin-top: -70px;
+}
+
+.container .list .item{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    /*OR*/
+    inset: 0 0 0 0;
+}
+
+.container .list .item img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.container .list .item .content{
+    position: absolute;
+    top: 10%;
+    width: 1140px;
+    max-width: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    box-sizing: border-box;
+    text-shadow: 0 0 15px rgba(0, 0, 0, 0.598);
+}
+
+
+.container .button{
+    display: flex;
+}
+
+
+/* thumbnail */
+.thumbnail{
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    width: max-content;
+    z-index: 100;
+    display: flex;
+    gap: 20px;
+    background-color: rgba(211, 211, 211, 0.11);
+    backdrop-filter: blur(10px);
+    border-bottom-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.626);
+}
+
+.thumbnail .item{
+    width: 150px;
+    height: 220px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.thumbnail .item img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50px;
+    mix-blend-mode: lighten;
+}
+
+.thumbnail .item .thum-content{
+    position: absolute;
+    bottom: 10px;
+    left: 40px;
+    right: 10px;
+}
+
+/* Arrows */
+.arrows{
+    position: absolute;
+    top: 80%;
+    right: 42%;
+    z-index: 100;
+    width: 300px;
+    max-width: 30%;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.arrows button{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background-color: rgba(211, 211, 211, 0.881);
+    color: rgba(0, 0, 0, 0.749);
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.arrows button:hover{
+    background-color: lightgray;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.612);
+}
+
+/* Animation */
+.container .list .item:nth-child(1){
+    z-index: 1;
+}
+
+/* Animation for content */
+.container .list .item:nth-child(1) .content{
+    filter: blur(20px);
+    opacity: 0;
+    animation: showContent .5s 1s linear 1 forwards;
+}
+
+@keyframes showContent{
+    to{
+        filter: blur(0);
+        opacity: 1;
+    }
+}
+
+/* Create Animation When Next Click */
+.container .list .item:nth-child(1) img{
+    width: 150px;
+    height: 220px;
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    border-radius: 100%;
+    animation: showImage .5s linear 1 forwards;
+}
+
+@keyframes showImage{
+    to{
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+    }
+}
+
+.container.next .thumbnail{
+    animation: effectNext .5s linear 1 forwards;
+}
+
+@keyframes effectNext{
+    from{
+        transform: translateX(150px);
+    }
+}
+
+/* Prev Click */
+.container.prev .list .item:nth-child(2){
+    z-index: 200;
+}
+
+.container.prev .list .item:nth-child(2) img{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    animation: outFrame 0.5s linear 1 forwards;
+}
+
+@keyframes outFrame{
+    to{
+        width: 150px;
+        height: 220px;
+        bottom: 50px;
+        left: 50%;
+        border-radius: 50px;
+    }
+}
+
+.container.prev .list .item:nth-child(2) .content{
+    animation: contentOut 1.5s linear 1 forwards;
+}
+@keyframes contentOut{
+    to{
+        filter: blur(20px);
+        opacity: 0;
+    }
+}
+
+.container.next .arrows button,
+.container.prev .arrows button{
+    pointer-events: none;
+}
+
+/* Running Time */
+.container .time{
+    position: absolute;
+    z-index: 999;
+    width: 0;
+    height: 5px;
+    background-color: #ff0040;
+    left: 0;
+    top: 0;
+}
+
+.container.next .time,
+.container.prev .time{
+    animation: runningTime 2s linear 1 forwards;
+}
+
+@keyframes runningTime{
+    from{width: 100%;}
+    to{width: 0%;}
+}
+
+@media screen and (max-width: 700px){
+    .container .list .item .content{
+        padding: 0;
+    }
+    
+    .container .list .item .content h1{
+        font-size: 50px;
+    }
+
+    .thumbnail{
+        top: 75%;
+    }
+    .arrows{
+        left: 15%;
+    }
+}
